@@ -9,10 +9,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class EditPage {
-	public JTextField clgtxt;
-	public JTextField teamtxt;
+	public JTextField lastNameTxt;
+	public JTextField ftText;
 	public JTextField nametxt;
-	public JTextField abbrtxt;
+	public JTextField collegetxt;
 	private JTextField addNewLbl;
 	private JTextField textField_3;
 	private JPasswordField passwordField;
@@ -34,8 +34,8 @@ public class EditPage {
 	private JTextField deleteTxtF;
 	private JTextField addNewL, quantityLb, priceLb;
 	public JPanel itemModPanel;
-	public JButton findPlayer;
-	public JButton findTeam;
+	public JButton newPlayer;
+	public JButton deleteButton;
 	public EditPage() {
 	itemModPanel = new JPanel();
 	itemModPanel.setBackground(Color.GRAY);
@@ -43,7 +43,7 @@ public class EditPage {
 
 
 
-	JLabel lblNewLabel = new JLabel("BasketballFinder");
+	JLabel lblNewLabel = new JLabel("Edit Page");
 	lblNewLabel.setForeground(Color.WHITE);
 	lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 	lblNewLabel.setBounds(261, 11, 165, 14);
@@ -51,7 +51,7 @@ public class EditPage {
 
 
 
-	Label label_1 = new Label("Player Name:");
+	Label label_1 = new Label("First Name:");
 	label_1.setForeground(Color.WHITE);
 	label_1.setBounds(50, 149, 91, 22);
 	itemModPanel.add(label_1);
@@ -63,55 +63,55 @@ public class EditPage {
 	nametxt.setBounds(40, 180, 126, 39);
 	itemModPanel.add(nametxt);
 
-	Label label_3 = new Label("College Name:");
+	Label label_3 = new Label("Last Name:");
 	label_3.setForeground(Color.WHITE);
 	label_3.setBounds(270, 149, 91, 22);
 	itemModPanel.add(label_3);
 
 
 
-	clgtxt = new JTextField();
-	clgtxt.setColumns(10);
-	clgtxt.setBounds(260, 180, 126, 39);
-	itemModPanel.add(clgtxt);
+	lastNameTxt = new JTextField();
+	lastNameTxt.setColumns(10);
+	lastNameTxt.setBounds(260, 180, 126, 39);
+	itemModPanel.add(lastNameTxt);
 	
-	findPlayer = new JButton();
-	findPlayer.setText("Find Player");
-	findPlayer.setBounds(490, 180, 126, 39);
-	itemModPanel.add(findPlayer);
+	newPlayer = new JButton();
+	newPlayer.setText("Create/Update Player");
+	newPlayer.setBounds(490, 180, 126, 39);
+	itemModPanel.add(newPlayer);
 
 
 
-	Label label_1_1 = new Label("Team Name:");
+	Label label_1_1 = new Label("FT%");
 	label_1_1.setForeground(Color.WHITE);
 	label_1_1.setBounds(270, 249, 91, 22);
 	itemModPanel.add(label_1_1);
 
 
 
-	teamtxt = new JTextField();
-	teamtxt.setColumns(10);
-	teamtxt.setBounds(260, 280, 126, 39);
-	itemModPanel.add(teamtxt);
+	ftText = new JTextField();
+	ftText.setColumns(10);
+	ftText.setBounds(260, 280, 126, 39);
+	itemModPanel.add(ftText);
 
 
 
-	Label label_2 = new Label("Team Abbr:");
+	Label label_2 = new Label("College");
 	label_2.setForeground(Color.WHITE);
 	label_2.setBounds(50, 249, 91, 22);
 	itemModPanel.add(label_2);
 
 
 
-	abbrtxt = new JTextField();
-	abbrtxt.setColumns(10);
-	abbrtxt.setBounds(40, 280, 126, 39);
-	itemModPanel.add(abbrtxt);
+	collegetxt = new JTextField();
+	collegetxt.setColumns(10);
+	collegetxt.setBounds(40, 280, 126, 39);
+	itemModPanel.add(collegetxt);
 	
-	findTeam = new JButton();
-	findTeam.setText("Find Team");
-	findTeam.setBounds(490, 280, 126, 39);
-	itemModPanel.add(findTeam);
+	deleteButton = new JButton();
+	deleteButton.setText("Delete Player");
+	deleteButton.setBounds(490, 280, 126, 39);
+	itemModPanel.add(deleteButton);
 //
 //
 //
