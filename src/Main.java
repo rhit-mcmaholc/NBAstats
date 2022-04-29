@@ -32,11 +32,9 @@ import javax.swing.*;
 public class Main {
 
 	public static Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	public boolean connect(String user, String pass) {
 		//TODO: Task 1
 		
 		//BUILD YOUR CONNECTION STRING HERE USING THE SAMPLE URL ABOVE
-	}
 	public static void main(String[] args) {
 		/* 
 		 * This first section creaions a URL "connection string" to be used to connect to the particular
@@ -56,17 +54,8 @@ public class Main {
 		/*
 		 * create these connections in a scope so that they can be reliably closed in several places.
 		 */
-		Connection connection = null;
+		final Connection connection;
 		//System.out.println(url);
-		try {
-			connection = DriverManager.getConnection(fullUrl);
-		}
-        // Handle any errors that may have occurred.
-        catch (SQLException e) {
-        	e.printStackTrace();
-            return;
-            
-        }
 		Scanner reader = new Scanner(System.in);
 		/*
 		 * Note that SQL Server operations all must be in try/catch structures as they 
@@ -83,7 +72,7 @@ public class Main {
 			frame.add(window.Login, BorderLayout.CENTER);
 			JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 			frame.setVisible(true);
-			EditPage window2 = new EditPage();
+			ReadPage window2 = new ReadPage();
 			tabbedPane.addTab("BasketballFinder", null, window2.itemModPanel, null);
 			window.loginSubmitBtn.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent e) {
@@ -97,57 +86,108 @@ public class Main {
 					 System.exit(1);
 			     }
 			});
-			window2.findTeam.addActionListener(new ActionListener() {
+			window2.findPlayer.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent e) {
-					 ArrayList<String> rests = new ArrayList<String>();
+//					 ArrayList<String> rests = new ArrayList<String>();
 //						dbService.connect("SodaBaseUsermcmaholc", "Password123");
 						try {
-							String selectSql = "SELECT FreeThrowPercent FROM [Player] WHERE NAME = ? AND WHERE COLLEGE = ?";
-							PreparedStatement statement = dbService.getConnection().prepareStatement(selectSql);
-							dbService.getConnection().setAutoCommit(false);
-							statement.setString(1, username);
+							PreparedStatement statement;
+							String selectSql = "SELECT FreeThrowPercent FROM [Player] pl";
+							selectSql += " JOIN Person pe ON pe.ID = pl.PlayerID";
+							if(!window2.nametxt.getText().isEmpty() || !window2.clgtxt.getText().isEmpty()) {
+								selectSql += " WHERE";
+								if(!window2.nametxt.getText().isEmpty() && !window2.clgtxt.getText().isEmpty()) {
+									selectSql += " College = ? AND [First Name] = ?";
+									statement = connection.prepareStatement(selectSql);
+									statement.setString(2, window2.nametxt.getText());
+									statement.setString(1, window2.clgtxt.getText());
+									
+								}
+								else if(!window2.clgtxt.getText().isEmpty()) {
+									selectSql += " College = ?";
+									statement = connection.prepareStatement(selectSql);
+									statement.setString(1, window2.clgtxt.getText());
+								}
+								else {
+									selectSql += " [First Name] = ?";
+
+									statement = connection.prepareStatement(selectSql);
+									statement.setString(1, window2.nametxt.getText());
+								}
+							}
+							else {
+								statement = connection.prepareStatement(selectSql);
+							}
+							connection.setAutoCommit(false);
+							System.out.println(statement);
 							ResultSet resultSet = statement.executeQuery();
 				            resultSet.next();
-				            byte[] salt = dec.decode(resultSet.getString("PasswordSalt"));
-				            String hash = resultSet.getString("PasswordHash");
+				            JOptionPane.showMessageDialog(frame, "FreeThrowPercent:" + resultSet.getDouble("FreeThrowPercent")*100 + "%");
 				            //System.out.println(hash);
 				            
-				            String hashtemp = hashPassword(salt, password);
 				           // System.out.println(hashtemp);
-				            if(hash.equals(hashtemp)) {
-				            	return true;
-				            }
-				            else {
-				            	//JOptionPane.showMessageDialog(null, "Login Failed");
-				            	return false;
-				            }
+				            
 				            //System.out.println(resultSet.getString("name"));
 
 				            // Print results from select statement
 				            	//System.out.println("loop");
 						}        
-						catch(SQLException e) {
-							e.printStackTrace();
-							return false;
-						}
-							Statement statement = connection.createStatement();
-							String selectSql = "SELECT name from dbo.Rest";
-				            ResultSet resultSet = statement.executeQuery(selectSql);
+						catch(SQLException e2) {
+							JOptionPane.showMessageDialog(frame, "No player found");
+							e2.printStackTrace();
+						}					
+			     }
+			});
+			window2.findTeam.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent e) {
+//					 ArrayList<String> rests = new ArrayList<String>();
+//						dbService.connect("SodaBaseUsermcmaholc", "Password123");
+						try {
+							PreparedStatement statement;
+							String selectSql = "SELECT HomeArenaName FROM [Team]";
+							if(!window2.teamtxt.getText().isEmpty() || !window2.abbrtxt.getText().isEmpty()) {
+								selectSql += " WHERE";
+								if(!window2.teamtxt.getText().isEmpty() && !window2.abbrtxt.getText().isEmpty()) {
+									selectSql += " TeamName = ? AND TeamAbbreviation = ?";
+									statement = connection.prepareStatement(selectSql);
+									statement.setString(1, window2.teamtxt.getText());
+									statement.setString(2, window2.abbrtxt.getText());
+									
+								}
+								else if(!window2.abbrtxt.getText().isEmpty()) {
+									selectSql += " TeamAbbreviation = ?";
+									statement = connection.prepareStatement(selectSql);
+									statement.setString(1, window2.abbrtxt.getText());
+								}
+								else {
+									selectSql += " TeamName = ?";
+									statement = connection.prepareStatement(selectSql);
+									statement.setString(1, window2.teamtxt.getText());
+								}
+							}
+							else {
+								statement = connection.prepareStatement(selectSql);
+							}
+							connection.setAutoCommit(false);
+							ResultSet resultSet = statement.executeQuery();
+				            resultSet.next();
+				            JOptionPane.showMessageDialog(frame, "HomeArenaName:" + resultSet.getString("HomeArenaName"));
+				            //System.out.println(hash);
+				            
+				           // System.out.println(hashtemp);
+				            
 				            //System.out.println(resultSet.getString("name"));
 
 				            // Print results from select statement
-				            while (resultSet.next()) {
 				            	//System.out.println("loop");
-				                rests.add(resultSet.getString("name"));
-				            }
-						}
-						catch(SQLException e) {
-							e.printStackTrace();
-						}
-						if()
-						JOptionPane.showMessageDialog(frame, "Team:" + "");
+						}        
+						catch(SQLException e2) {
+							JOptionPane.showMessageDialog(frame, "No team found");
+							e2.printStackTrace();
+						}					
 			     }
 			});
+
 			
 //			JFrame frame = new JFrame();
 //	        frame.setTitle("NBA Stats");
@@ -196,23 +236,22 @@ public class Main {
 //			else {
 //				System.out.println("Procedure reported an error.");
 //			}
-			connection.close();
-			reader.close();
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		finally {
-			try {
-				// make sure to close the DB connection and the input stream
-				if (connection!=null && !connection.isClosed()) {
-					connection.close();
-					reader.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+//		finally {
+//			try {
+//				// make sure to close the DB connection and the input stream
+//				if (connection!=null && !connection.isClosed()) {
+//					connection.close();
+//					reader.close();
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+		
 	}
 
 }

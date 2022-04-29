@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class EditPage {
+public class ReadPage {
 	public JTextField clgtxt;
 	public JTextField teamtxt;
 	public JTextField nametxt;
@@ -36,7 +36,7 @@ public class EditPage {
 	public JPanel itemModPanel;
 	public JButton findPlayer;
 	public JButton findTeam;
-	public EditPage() {
+	public ReadPage() {
 	itemModPanel = new JPanel();
 	itemModPanel.setBackground(Color.GRAY);
 	itemModPanel.setLayout(null);
@@ -194,4 +194,3 @@ public class EditPage {
 //	itemModPanel.add(confirmButto);
 	}
 }
-
