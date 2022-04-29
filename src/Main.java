@@ -1,15 +1,28 @@
 package src;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.*;
 /************************************************************************/
 /*  A small example of using JDBC to the FoodDelivery DB                */
 /*  Used as an example for CSSE333 - tracy section                      */
@@ -18,6 +31,12 @@ import javax.swing.JFrame;
 /************************************************************************/
 public class Main {
 
+	public static Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	public boolean connect(String user, String pass) {
+		//TODO: Task 1
+		
+		//BUILD YOUR CONNECTION STRING HERE USING THE SAMPLE URL ABOVE
+	}
 	public static void main(String[] args) {
 		/* 
 		 * This first section creaions a URL "connection string" to be used to connect to the particular
@@ -31,26 +50,123 @@ public class Main {
 				.replace("${dbServer}", "titan.csse.rose-hulman.edu")
 				.replace("${dbName}", "NBAStats_S4G4")
 				.replace("${user}", "mcmaholc")
-				.replace("${pass}", );
+				.replace("${pass}", passwordCreator.substring(51,52).toUpperCase() + passwordCreator.substring(38,39) + passwordCreator.substring(10,11) + passwordCreator.substring(7,8) + passwordCreator.substring(27,28) + passwordCreator.substring(27,28) + passwordCreator.substring(17,18) + passwordCreator.substring(17,18) + passwordCreator.substring(24,25).toUpperCase() + passwordCreator.substring(38,39) + passwordCreator.substring(24,25));
 		//System.out.println(fullUrl);
 
 		/*
 		 * create these connections in a scope so that they can be reliably closed in several places.
 		 */
 		Connection connection = null;
+		//System.out.println(url);
+		try {
+			connection = DriverManager.getConnection(fullUrl);
+		}
+        // Handle any errors that may have occurred.
+        catch (SQLException e) {
+        	e.printStackTrace();
+            return;
+            
+        }
 		Scanner reader = new Scanner(System.in);
 		/*
 		 * Note that SQL Server operations all must be in try/catch structures as they 
 		 * can throw SQLException exceptions.  
+		 * 
 		 */
 		try {
 			// open the connection to the DB
-			connection = DriverManager.getConnection(fullUrl);
 			JFrame frame = new JFrame();
-	        frame.setTitle("NBA Stats");
-	        frame.setSize(1600, 800);
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        frame.setVisible(true);
+			frame.setBounds(100, 100, 704, 482);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			connection = DriverManager.getConnection(fullUrl);
+			LoginPage window = new LoginPage();
+			frame.add(window.Login, BorderLayout.CENTER);
+			JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+			frame.setVisible(true);
+			EditPage window2 = new EditPage();
+			tabbedPane.addTab("BasketballFinder", null, window2.itemModPanel, null);
+			window.loginSubmitBtn.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent e) {
+						window.Login.setEnabled(false);
+						window.Login.setVisible(false);
+						frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+			     }
+			});
+			window.exitBtn.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent e) {
+					 System.exit(1);
+			     }
+			});
+			window2.findTeam.addActionListener(new ActionListener() {
+				 public void actionPerformed(ActionEvent e) {
+					 ArrayList<String> rests = new ArrayList<String>();
+//						dbService.connect("SodaBaseUsermcmaholc", "Password123");
+						try {
+							String selectSql = "SELECT FreeThrowPercent FROM [Player] WHERE NAME = ? AND WHERE COLLEGE = ?";
+							PreparedStatement statement = dbService.getConnection().prepareStatement(selectSql);
+							dbService.getConnection().setAutoCommit(false);
+							statement.setString(1, username);
+							ResultSet resultSet = statement.executeQuery();
+				            resultSet.next();
+				            byte[] salt = dec.decode(resultSet.getString("PasswordSalt"));
+				            String hash = resultSet.getString("PasswordHash");
+				            //System.out.println(hash);
+				            
+				            String hashtemp = hashPassword(salt, password);
+				           // System.out.println(hashtemp);
+				            if(hash.equals(hashtemp)) {
+				            	return true;
+				            }
+				            else {
+				            	//JOptionPane.showMessageDialog(null, "Login Failed");
+				            	return false;
+				            }
+				            //System.out.println(resultSet.getString("name"));
+
+				            // Print results from select statement
+				            	//System.out.println("loop");
+						}        
+						catch(SQLException e) {
+							e.printStackTrace();
+							return false;
+						}
+							Statement statement = connection.createStatement();
+							String selectSql = "SELECT name from dbo.Rest";
+				            ResultSet resultSet = statement.executeQuery(selectSql);
+				            //System.out.println(resultSet.getString("name"));
+
+				            // Print results from select statement
+				            while (resultSet.next()) {
+				            	//System.out.println("loop");
+				                rests.add(resultSet.getString("name"));
+				            }
+						}
+						catch(SQLException e) {
+							e.printStackTrace();
+						}
+						if()
+						JOptionPane.showMessageDialog(frame, "Team:" + "");
+			     }
+			});
+			
+//			JFrame frame = new JFrame();
+//	        frame.setTitle("NBA Stats");
+//	        frame.setLocation(0, 0);
+//	        frame.setSize((int) screen.getWidth(),(int) screen.getHeight());
+//	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	        frame.setVisible(true);
+//	        JPanel panel=new JPanel();  
+//	        panel.setBounds(0,0,(int) screen.getWidth(),(int) screen.getHeight());    
+//	        panel.setBackground(Color.gray);  
+//	        JButton b1=new JButton("Add");     
+//	        b1.setBounds((int) screen.getWidth() * 9 / 10,(int) screen.getHeight() * 1 / 10,(int) screen.getWidth() * 9.5 / 10,30);    
+//	        b1.setBackground(Color.yellow);   
+//	        JButton b2=new JButton("Get");   
+//	        b2.setBounds(100,100,80,30);    
+//	        b2.setBackground(Color.green);   
+//	        panel.add(b1); panel.add(b2);  
+//	        frame.add(panel);  
+
 	        
 			// create a structure to call the stored procedure, CheckSalesQuota
 ////			CallableStatement stmt = connection.prepareCall("{? = call CheckSalesQuota(?)}");
