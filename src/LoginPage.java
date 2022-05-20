@@ -58,9 +58,13 @@ public class LoginPage {
 		passwordLoginTxt.setBounds(21, 150, 634, 31);
 		Login.add(passwordLoginTxt);
 
-		loginSubmitBtn = new JButton("SUBMIT");
-		loginSubmitBtn.setBounds(21, 208, 634, 31);
+		loginSubmitBtn = new JButton("LOGIN");
+		loginSubmitBtn.setBounds(20, 208, 250, 30);
 		Login.add(loginSubmitBtn);
+		
+		JButton signUpButn = new JButton("Sign up");
+		signUpButn.setBounds(405, 208, 250, 30);
+		Login.add(signUpButn);
 
 		exitBtn = new JButton("Exit");
 		exitBtn.setBounds(21, 250, 634, 31);

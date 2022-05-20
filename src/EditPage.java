@@ -3,15 +3,16 @@ package src;
 import java.awt.Label;
 import java.awt.*;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class EditPage {
-	public JTextField lastNameTxt;
-	public JTextField ftText;
-	public JTextField nametxt;
+	public JTextField lNameField;
+	public JTextField numberField;
+	public JTextField fNameField;
 	public JTextField collegetxt;
 	private JTextField addNewLbl;
 	private JTextField textField_3;
@@ -36,17 +37,35 @@ public class EditPage {
 	public JPanel itemModPanel;
 	public JButton newPlayer;
 	public JButton deleteButton;
+	public JComboBox teamsCombo;
+	
+	
 	public EditPage() {
 	itemModPanel = new JPanel();
 	itemModPanel.setBackground(Color.GRAY);
 	itemModPanel.setLayout(null);
 
+	
+	
+	
+//	//new variables for sprocs
+//	// dropdown box for teams
+//			// populate with teams
+//			String[] teams = { "76ers", "Bucks", "Bulls", "Cavaliers", "Celtics", "Clippers", "Grizzlies", "Hawks", "Heat",
+//					"Hornets", "Jazz", "Kings", "Knicks", "Lakers", "Magic", "Mavericks", "Nets", "Nuggets", "Pacers",
+//					"Pelicans", "Pistons", "Raptors", "Rockets", "Spurs", "Suns", "Thunder", "Timberwolves",
+//					"Trail Blazers", "Warriors", "Wizards" };
+//
+//			//creating combo box
+//			teamsCombo = new JComboBox<String>(teams);
+//			teamsCombo.setBounds(50, 120, 100, 20);
+//			itemModPanel.add(teamsCombo);
 
 
 	JLabel lblNewLabel = new JLabel("Edit Page");
 	lblNewLabel.setForeground(Color.WHITE);
 	lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-	lblNewLabel.setBounds(261, 11, 165, 14);
+	lblNewLabel.setBounds(261, 11, 165, 30);
 	itemModPanel.add(lblNewLabel);
 
 
@@ -58,10 +77,10 @@ public class EditPage {
 
 
 
-	nametxt = new JTextField();
-	nametxt.setColumns(10);
-	nametxt.setBounds(40, 180, 126, 39);
-	itemModPanel.add(nametxt);
+	fNameField = new JTextField();
+	fNameField.setColumns(10);
+	fNameField.setBounds(40, 180, 126, 39);
+	itemModPanel.add(fNameField);
 
 	Label label_3 = new Label("Last Name:");
 	label_3.setForeground(Color.WHITE);
@@ -70,33 +89,33 @@ public class EditPage {
 
 
 
-	lastNameTxt = new JTextField();
-	lastNameTxt.setColumns(10);
-	lastNameTxt.setBounds(260, 180, 126, 39);
-	itemModPanel.add(lastNameTxt);
+	lNameField = new JTextField();
+	lNameField.setColumns(10);
+	lNameField.setBounds(260, 180, 126, 39);
+	itemModPanel.add(lNameField);
 	
 	newPlayer = new JButton();
-	newPlayer.setText("Create/Update Player");
-	newPlayer.setBounds(490, 180, 126, 39);
+	newPlayer.setText("ADD/UPDATE PLAYER");
+	newPlayer.setBounds(490, 180, 130, 40);
 	itemModPanel.add(newPlayer);
 
 
 
-	Label label_1_1 = new Label("FT%");
-	label_1_1.setForeground(Color.WHITE);
-	label_1_1.setBounds(270, 249, 91, 22);
-	itemModPanel.add(label_1_1);
+	Label NumberLabel = new Label("Number");
+	NumberLabel.setForeground(Color.WHITE);
+	NumberLabel.setBounds(270, 249, 91, 22);
+	itemModPanel.add(NumberLabel);
 
 
 
-	ftText = new JTextField();
-	ftText.setColumns(10);
-	ftText.setBounds(260, 280, 126, 39);
-	itemModPanel.add(ftText);
+	numberField = new JTextField();
+	numberField.setColumns(10);
+	numberField.setBounds(260, 280, 126, 39);
+	itemModPanel.add(numberField);
 
 
-
-	Label label_2 = new Label("College");
+//
+	Label label_2 = new Label("Team");
 	label_2.setForeground(Color.WHITE);
 	label_2.setBounds(50, 249, 91, 22);
 	itemModPanel.add(label_2);
@@ -109,89 +128,19 @@ public class EditPage {
 	itemModPanel.add(collegetxt);
 	
 	deleteButton = new JButton();
-	deleteButton.setText("Delete Player");
-	deleteButton.setBounds(490, 280, 126, 39);
+	deleteButton.setText("CHANGE COACH TEAM");
+	deleteButton.setBounds(490, 280, 130, 40);
 	itemModPanel.add(deleteButton);
-//
-//
-//
-//	Label label2 = new Label("Item name :");
-//	label2.setForeground(Color.WHITE);
-//	label2.setBounds(50, 270, 91, 22);
-//	itemModPanel.add(label2);
-//
-//
-//
-//	addNewL = new JTextField();
-//	addNewL.setColumns(10);
-//	addNewL.setBounds(40, 300, 126, 39);
-//	itemModPanel.add(addNewL);
-//
-//
-//
-//	Label label_0 = new Label("Item Quantity:");
-//	label_0.setForeground(Color.WHITE);
-//	label_0.setBounds(280, 270, 91, 22);
-//	itemModPanel.add(label_0);
-//
-//
-//
-//	quantityLb = new JTextField();
-//	quantityLb.setColumns(10);
-//	quantityLb.setBounds(270, 300, 126, 39);
-//	itemModPanel.add(quantityLb);
-//
-//
-//
-//	Label label_1_ = new Label("Item Price:");
-//	label_1_.setForeground(Color.WHITE);
-//	label_1_.setBounds(500, 270, 91, 22);
-//	itemModPanel.add(label_1_);
-//
-//
-//
-//	priceLb = new JTextField();
-//	priceLb.setColumns(10);
-//	priceLb.setBounds(490, 300, 126, 39);
-//	itemModPanel.add(priceLb);
-//
-//
-//
-//	JButton addItem = new JButton("Add Confirm");
-//	addItem.setBounds(485, 350, 140, 30);
-//	itemModPanel.add(addItem);
-//
-//
-//
-//	JButton quantityButton = new JButton("Update Quantity");
-//	quantityButton.setBounds(265, 230, 140, 30);
-//	itemModPanel.add(quantityButton);
-//
-//
-//
-//	JButton priceButton = new JButton("Update Price");
-//	priceButton.setBounds(485, 230, 140, 30);
-//	itemModPanel.add(priceButton);
-//
-//
-//
-//	Label labelD = new Label("Delete item:");
-//	labelD.setForeground(Color.WHITE);
-//	labelD.setBounds(300, 66, 91, 22);
-//	itemModPanel.add(labelD);
-//
-//
-//
-//	deleteTxtF = new JTextField();
-//	deleteTxtF.setColumns(10);
-//	deleteTxtF.setBounds(390, 55, 126, 39);
-//	itemModPanel.add(deleteTxtF);
-//
-//
-//
-//	JButton confirmButto = new JButton("Delete Confirm");
-//	confirmButto.setBounds(520, 60, 140, 30);
-//	itemModPanel.add(confirmButto);
+
+	
+	
+	
 	}
+	
+	
+	///////////////////////////////////////////HELPER METHODS//////////////////////////////////////////
+	
+	
+	
 }
 
